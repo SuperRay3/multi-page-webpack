@@ -12,6 +12,13 @@ module.exports = {
     filename: 'js/[name]-bundle.js',
     clean: true
   },
+  devServer: {
+    static: {
+      contentBase: path.resolve(__dirname, "../dist/daliy-report.html")
+    },
+    compress: true,
+    port: 9000
+  },
   module: {
     rules: [
       {
