@@ -1,8 +1,9 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin')
+const { CleanWebpackPlugin } = require("clean-webpack-plugin")
+const webpack = require('webpack')
 
 module.exports = {
-  mode: 'production',
   entry: {
     'daliy-report': path.resolve(__dirname, '../src/pages/daliy-report/index.js'),
     'weekly-report': path.resolve(__dirname, '../src/pages/weekly-report/index.js'),
@@ -11,13 +12,6 @@ module.exports = {
     path: path.resolve(__dirname, '../dist'),
     filename: 'js/[name]-bundle.js',
     clean: true
-  },
-  devServer: {
-    static: {
-      contentBase: path.resolve(__dirname, "../dist/daliy-report.html")
-    },
-    compress: true,
-    port: 9000
   },
   module: {
     rules: [
@@ -55,6 +49,8 @@ module.exports = {
     ],
   },
   plugins: [
+    new webpack.ProgressPlugin(),
+    new CleanWebpackPlugin(),
     new HtmlWebpackPlugin({
       template: path.resolve(__dirname, '../src/pages/daliy-report/daliy-report.html'),
       filename: 'daliy-report.html',
