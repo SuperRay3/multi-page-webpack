@@ -5,17 +5,32 @@ const webpackBase = require("./webpack.config.base");
 const { merge } = require("webpack-merge");
 // 引入 webpack
 const webpack = require("webpack"); //虽然在webpack.config.base中引入了但是在这里不可用还是要引入一遍
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
+
 // 合并配置文件
 module.exports = merge(webpackBase,{
   mode: 'production',
+  plugins: [
+    new BundleAnalyzerPlugin(),
+  ],
   optimization: {
     minimize: true,
     splitChunks: {
-      chunks: 'all',
+      minSize: 1,
       cacheGroups: {
         vendors: {
+          chunks: 'all',
+          name: 'vendors',
           test: /[\\/]node_modules[\\/]/,  // 匹配node_modules目录下的文件
-          priority: -10   // 优先级配置项
+          priority: -10,
+          reuseExistingChunk: true,
+        },
+        common: {
+          chunks: 'all',
+          name: 'common',
+          minChunks: 1,
+          priority: -20,
+          reuseExistingChunk: true
         }
       }
     }

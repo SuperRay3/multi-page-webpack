@@ -1,6 +1,7 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const { CleanWebpackPlugin } = require("clean-webpack-plugin")
+
 const webpack = require('webpack')
 
 module.exports = {
@@ -12,6 +13,11 @@ module.exports = {
     path: path.resolve(__dirname, '../dist'),
     filename: 'js/[name]-bundle.js',
     clean: true
+  },
+  resolve: {
+    alias: {
+      '@': path.resolve(__dirname, '../src')
+    }
   },
   module: {
     rules: [
